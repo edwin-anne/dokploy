@@ -39,6 +39,8 @@ export * from "./services/security";
 export * from "./services/server";
 export * from "./services/settings";
 export * from "./services/ssh-key";
+export * from "./services/sso-auth";
+export * from "./services/sso-config";
 export * from "./services/user";
 export * from "./services/volume-backups";
 export * from "./setup/config-paths";

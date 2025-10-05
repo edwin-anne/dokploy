@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
+import { api } from "@/utils/api";
 
 const LoginSchema = z.object({
 	email: z.string().email(),
@@ -64,6 +65,11 @@ export default function Home({ IS_CLOUD }: Props) {
 	const [backupCode, setBackupCode] = useState("");
 	const [isGithubLoading, setIsGithubLoading] = useState(false);
 	const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+	const [isSsoLoading, setIsSsoLoading] = useState(false);
+
+	// Check if SSO is enabled
+	const { data: ssoEnabled } = api.sso.isEnabled.useQuery();
+
 	const loginForm = useForm<LoginForm>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
@@ -200,6 +206,19 @@ export default function Home({ IS_CLOUD }: Props) {
 			setIsGoogleLoading(false);
 		}
 	};
+
+	const handleSsoSignIn = async () => {
+		setIsSsoLoading(true);
+		try {
+			window.location.href = "/api/sso/login";
+		} catch (error) {
+			toast.error("An error occurred while signing in with SSO", {
+				description: error instanceof Error ? error.message : "Unknown error",
+			});
+			setIsSsoLoading(false);
+		}
+	};
+
 	return (
 		<>
 			<div className="flex flex-col space-y-2 text-center">
@@ -265,6 +284,30 @@ export default function Home({ IS_CLOUD }: Props) {
 									/>
 								</svg>
 								Sign in with Google
+							</Button>
+						)}
+						{ssoEnabled && (
+							<Button
+								variant="outline"
+								type="button"
+								className="w-full mb-4"
+								onClick={handleSsoSignIn}
+								isLoading={isSsoLoading}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="mr-2 size-4"
+								>
+									<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+									<path d="m9 12 2 2 4-4" />
+								</svg>
+								Sign in with SSO
 							</Button>
 						)}
 						<Form {...loginForm}>

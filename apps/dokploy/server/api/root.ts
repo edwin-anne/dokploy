@@ -35,6 +35,7 @@ import { securityRouter } from "./routers/security";
 import { serverRouter } from "./routers/server";
 import { settingsRouter } from "./routers/settings";
 import { sshRouter } from "./routers/ssh-key";
+import { ssoRouter } from "./routers/sso";
 import { stripeRouter } from "./routers/stripe";
 import { swarmRouter } from "./routers/swarm";
 import { userRouter } from "./routers/user";
@@ -72,6 +73,7 @@ export const appRouter = createTRPCRouter({
 	cluster: clusterRouter,
 	notification: notificationRouter,
 	sshKey: sshRouter,
+	sso: ssoRouter,
 	gitProvider: gitProviderRouter,
 	gitea: giteaRouter,
 	bitbucket: bitbucketRouter,

@@ -296,6 +296,14 @@ const MENU: Menu = {
 				!!(auth?.role === "owner" || auth?.canAccessToSSHKeys),
 		},
 		{
+			isSingle: true,
+			title: "SSO",
+			icon: ShieldCheck,
+			url: "/dashboard/settings/sso",
+			// Only enabled for admins
+			isEnabled: ({ auth }) => !!(auth?.role === "owner"),
+		},
+		{
 			title: "AI",
 			icon: BotIcon,
 			url: "/dashboard/settings/ai",
