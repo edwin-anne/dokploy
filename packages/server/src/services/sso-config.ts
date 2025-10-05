@@ -48,9 +48,7 @@ export const findSsoConfigById = async (
 	return result;
 };
 
-export const findSsoConfigByOrganizationId = async (
-	organizationId: string,
-) => {
+export const findSsoConfigByOrganizationId = async (organizationId: string) => {
 	const result = await db.query.ssoConfig.findFirst({
 		where: eq(ssoConfig.organizationId, organizationId),
 	});

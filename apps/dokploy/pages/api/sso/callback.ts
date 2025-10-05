@@ -1,11 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { exchangeCodeForToken, getUserInfo } from "@dokploy/server";
-import { auth } from "@dokploy/server/lib/auth";
-import { db } from "@dokploy/server/db";
-import { users_temp, member, organization } from "@dokploy/server/db/schema";
-import { eq } from "drizzle-orm";
-import * as bcrypt from "bcrypt";
 import { randomBytes } from "node:crypto";
+import { exchangeCodeForToken, getUserInfo } from "@dokploy/server";
+import { db } from "@dokploy/server/db";
+import { member, organization, users_temp } from "@dokploy/server/db/schema";
+import { auth } from "@dokploy/server/lib/auth";
+import * as bcrypt from "bcrypt";
+import { eq } from "drizzle-orm";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -44,7 +44,9 @@ export default async function handler(
 		const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
 		if (!tokenResponse) {
-			return res.status(500).json({ error: "Failed to exchange code for token" });
+			return res
+				.status(500)
+				.json({ error: "Failed to exchange code for token" });
 		}
 
 		// Get user info

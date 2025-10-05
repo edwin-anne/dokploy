@@ -82,7 +82,7 @@ export const SsoSettings = () => {
 				enabled: data.enabled,
 			});
 		}
-	}, [data, form]);
+	}, [data]);
 
 	const onSubmit = async (values: SsoConfigForm) => {
 		if (data) {
@@ -125,9 +125,9 @@ export const SsoSettings = () => {
 						SSO Configuration
 					</CardTitle>
 					<CardDescription>
-						Configure Single Sign-On (SSO) with your identity provider
-						(e.g., Keycloak). When enabled, users can authenticate using
-						your SSO provider.
+						Configure Single Sign-On (SSO) with your identity provider (e.g.,
+						Keycloak). When enabled, users can authenticate using your SSO
+						provider.
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="space-y-4 py-8 border-t">
@@ -156,8 +156,8 @@ export const SsoSettings = () => {
 												/>
 											</FormControl>
 											<FormDescription>
-												The OIDC issuer URL from your identity provider
-												(e.g., Keycloak realm URL)
+												The OIDC issuer URL from your identity provider (e.g.,
+												Keycloak realm URL)
 											</FormDescription>
 											<FormMessage />
 										</FormItem>
@@ -235,12 +235,10 @@ export const SsoSettings = () => {
 									render={({ field }) => (
 										<FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
 											<div className="space-y-0.5">
-												<FormLabel className="text-base">
-													Enable SSO
-												</FormLabel>
+												<FormLabel className="text-base">Enable SSO</FormLabel>
 												<FormDescription>
-													When enabled, users will see the SSO login option
-													on the login page
+													When enabled, users will see the SSO login option on
+													the login page
 												</FormDescription>
 											</div>
 											<FormControl>
@@ -256,10 +254,7 @@ export const SsoSettings = () => {
 
 								<div className="flex gap-2">
 									{!isEditing ? (
-										<Button
-											type="button"
-											onClick={() => setIsEditing(true)}
-										>
+										<Button type="button" onClick={() => setIsEditing(true)}>
 											{data ? "Edit Configuration" : "Create Configuration"}
 										</Button>
 									) : (
@@ -267,8 +262,7 @@ export const SsoSettings = () => {
 											<Button
 												type="submit"
 												disabled={
-													createMutation.isPending ||
-													updateMutation.isPending
+													createMutation.isPending || updateMutation.isPending
 												}
 											>
 												{createMutation.isPending ||
@@ -286,8 +280,7 @@ export const SsoSettings = () => {
 												variant="outline"
 												onClick={handleCancel}
 												disabled={
-													createMutation.isPending ||
-													updateMutation.isPending
+													createMutation.isPending || updateMutation.isPending
 												}
 											>
 												Cancel

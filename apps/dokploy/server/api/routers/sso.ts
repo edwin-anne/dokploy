@@ -7,7 +7,11 @@ import {
 	updateSsoConfigById,
 } from "@dokploy/server";
 import { TRPCError } from "@trpc/server";
-import { adminProcedure, createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import {
+	adminProcedure,
+	createTRPCRouter,
+	publicProcedure,
+} from "@/server/api/trpc";
 import {
 	apiCreateSsoConfig,
 	apiFindOneSsoConfig,

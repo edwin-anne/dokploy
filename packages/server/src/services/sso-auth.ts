@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { findEnabledSsoConfig } from "@dokploy/server";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 interface TokenResponse {
 	access_token: string;
@@ -25,7 +25,9 @@ export const getSsoAuthUrl = async (
 		return null;
 	}
 
-	const authUrl = new URL(`${ssoConfig.issuerUrl}/protocol/openid-connect/auth`);
+	const authUrl = new URL(
+		`${ssoConfig.issuerUrl}/protocol/openid-connect/auth`,
+	);
 	authUrl.searchParams.set("client_id", ssoConfig.clientId);
 	authUrl.searchParams.set("redirect_uri", redirectUri);
 	authUrl.searchParams.set("response_type", "code");
