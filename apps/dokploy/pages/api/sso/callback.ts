@@ -3,7 +3,7 @@ import { exchangeCodeForToken, getUserInfo } from "@dokploy/server";
 import { auth } from "@dokploy/server/lib/auth";
 import { db } from "@dokploy/server/db";
 import { users_temp, member, organization } from "@dokploy/server/db/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import * as bcrypt from "bcrypt";
 import { randomBytes } from "node:crypto";
 
@@ -102,21 +102,25 @@ export default async function handler(
 			user = newUser;
 		}
 
-		// Create session using better-auth
-		const sessionResponse = await auth.handler.createSession({
-			userId: user.id,
-			data: {},
+		// Create session using better-auth API
+		const sessionResponse = await auth.api.createSession({
+			body: {
+				userId: user.id,
+			},
 		});
 
-		if (!sessionResponse) {
+		if (!sessionResponse?.data?.session) {
 			return res.status(500).json({ error: "Failed to create session" });
 		}
 
-		// Set session cookie and redirect to dashboard
-		const sessionCookie = sessionResponse.headers?.get("Set-Cookie");
-		if (sessionCookie) {
-			res.setHeader("Set-Cookie", sessionCookie);
-		}
+		// Get the session token from the response
+		const { session, token } = sessionResponse.data;
+
+		// Set the session cookie
+		res.setHeader(
+			"Set-Cookie",
+			`better-auth.session_token=${token}; Path=/; HttpOnly; SameSite=Lax; Secure=${protocol === "https"}; Max-Age=${60 * 60 * 24 * 3}`,
+		);
 
 		return res.redirect("/dashboard/projects");
 	} catch (error) {

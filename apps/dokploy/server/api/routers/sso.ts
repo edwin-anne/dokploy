@@ -1,5 +1,6 @@
 import {
 	createSsoConfig,
+	findEnabledSsoConfig,
 	findSsoConfigById,
 	findSsoConfigByOrganizationId,
 	removeSsoConfigById,
@@ -93,9 +94,7 @@ export const ssoRouter = createTRPCRouter({
 		);
 	}),
 	isEnabled: publicProcedure.query(async () => {
-		const ssoConfig = await findSsoConfigByOrganizationId(
-			process.env.DEFAULT_ORGANIZATION_ID || "",
-		);
+		const ssoConfig = await findEnabledSsoConfig();
 		return ssoConfig?.enabled || false;
 	}),
 });

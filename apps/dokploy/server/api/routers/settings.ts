@@ -520,6 +520,7 @@ export const settingsRouter = createTRPCRouter({
 					"mongo",
 					"mariadb",
 					"sshRouter",
+					"sso",
 					"gitProvider",
 					"bitbucket",
 					"github",

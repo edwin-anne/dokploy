@@ -232,6 +232,7 @@ const { handler, api } = betterAuth({
 export const auth = {
 	handler,
 	createApiKey: api.createApiKey,
+	api,
 };
 
 export const validateRequest = async (request: IncomingMessage) => {
